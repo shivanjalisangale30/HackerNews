@@ -6,59 +6,7 @@ import java.util.*;
 
 public class HackerNews {
 
-    public static List<String> listOfWords(List<String> list) {
-        List<String> words = new ArrayList<>();
-        for (String s1 : list) {
-            String[] arrOfWords = s1.split(" ");
-            List<String> l1 = Arrays.asList(arrOfWords);
-            words.addAll(l1);
-        }
-        return words;
-    }
-
-    public static  String getPopularNewsHeading(Map<String, Integer> mapData, String mostOccuredWord) {
-        int value = 0;
-        String mostPopular="";
-        for (Map.Entry<String, Integer> val : mapData.entrySet()) {
-            if (val.getKey().contains(" "+mostOccuredWord+" " )) {
-                if ( val.getValue()>value){
-                    value=val.getValue();
-                    mostPopular=val.getKey();
-                }
-            }
-
-        }
-        System.out.println("Most populaR TEST DATA:"+mostPopular);
-        return mostPopular;
-    }
-
-    public static Map<String, Integer> findMaxCountWord(List<String> wordList) {
-        Map<String, Integer> wordMap = new HashMap<>();
-        for (String i : wordList) {
-            Integer j = wordMap.get(i);
-            wordMap.put(i, (j == null) ? 1 : j + 1);
-        }
-        wordMap.entrySet().stream().forEach(System.out::println);
-        return wordMap;
-    }
-
-    public static String getMaxCountWordInMap(Map<String, Integer> countMap) {
-        String key = "";
-        Integer value = 0;
-        // displaying the occurrence of elements in the arraylist
-        for (Map.Entry<String, Integer> val : countMap.entrySet()) {
-            if (val.getValue() > value) {
-                value = val.getValue();
-                key = val.getKey();
-            }
-            System.out.println("Element " + val.getKey() + " "
-                    + "occurs"
-                    + ": " + val.getValue() + " times");
-        }
-        return key;
-    }
-
-
+    //main method
     public static void main(String[] args) {
         List<String> newsHeadingsList = new ArrayList();
         List<Integer> scorePoints = new ArrayList<>();
@@ -103,7 +51,7 @@ public class HackerNews {
             newsPointMap.put(newsIterator.next(), scorePointIterator.next());
 
         }
-        System.out.println("Data :size" + newsPointMap.size());
+        System.out.println("Data size" + newsPointMap.size());
         newsPointMap.entrySet().stream().forEach(System.out::println);
         List<String> wordList = listOfWords(newsHeadingsList);
         wordList.stream().forEach(System.out::println);
@@ -113,5 +61,61 @@ public class HackerNews {
         String popularNewsHeading = getPopularNewsHeading(newsPointMap, countWordInMap);
         System.out.println(popularNewsHeading);
         driver.close();
+    }
+
+    //method for getting list of words from each heading
+    public static List<String> listOfWords(List<String> list) {
+        List<String> words = new ArrayList<>();
+        for (String s1 : list) {
+            String[] arrOfWords = s1.split(" ");
+            List<String> l1 = Arrays.asList(arrOfWords);
+            words.addAll(l1);
+        }
+        return words;
+    }
+
+    //method for mapping each word along with respective count
+    public static Map<String, Integer> findMaxCountWord(List<String> wordList) {
+        Map<String, Integer> wordMap = new HashMap<>();
+        for (String i : wordList) {
+            Integer j = wordMap.get(i);
+            wordMap.put(i, (j == null) ? 1 : j + 1);
+        }
+        wordMap.entrySet().stream().forEach(System.out::println);
+        return wordMap;
+    }
+
+    //method for resturning mostoccured word from map
+    public static String getMaxCountWordInMap(Map<String, Integer> countMap) {
+        String key = "";
+        Integer value = 0;
+        // displaying the occurrence of elements in the arraylist
+        for (Map.Entry<String, Integer> val : countMap.entrySet()) {
+            if (val.getValue() > value) {
+                value = val.getValue();
+                key = val.getKey();
+            }
+            System.out.println("Element " + val.getKey() + " "
+                    + "occurs"
+                    + ": " + val.getValue() + " times");
+        }
+        return key;
+    }
+
+    //method for returning most popular news from site
+    public static  String getPopularNewsHeading(Map<String, Integer> mapData, String mostOccuredWord) {
+        int value = 0;
+        String mostPopular="";
+        for (Map.Entry<String, Integer> val : mapData.entrySet()) {
+            if (val.getKey().contains(" "+mostOccuredWord+" " )) {
+                if ( val.getValue()>value){
+                    value=val.getValue();
+                    mostPopular=val.getKey();
+                }
+            }
+
+        }
+        System.out.println("Most Popular News is :"+mostPopular);
+        return mostPopular;
     }
 }
